@@ -225,6 +225,8 @@ protected
 end
 ```
 
+[You can find the complete code here](https://github.com/thatrubylove/manifesto-example-1)
+
 ## Homoiconicity
 
 By implementing much of what you see laid out in my manifesto, you end up with Ruby object structures that can be treated as code. You can pass Classes and modules, and their functions around with ease. Ruby is a LISP, or last close enough where it matters. I like to think of it as MatzLISP.
