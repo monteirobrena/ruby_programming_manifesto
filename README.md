@@ -69,44 +69,44 @@ Of course I do! :) And this is real code I wrote recently, not something I made 
 
 But before I go into why this style kicks serious ass, I would like you to try to read this and see if you can spot some of the benefits before I illuminate you.
 
-
 ### The public interface and usage
 
 ```ruby
-require 'google_stats_retriever'
-GoogleStatsRetriever.('+DreamrOKelly')
-# => {:follower_count=>21, :following_count=>9}
+require 'gplus_stats'
+GplusStats.('+RubyLoveIO')
+# => {:follower_count=>0, :following_count=>21}
 ```
 
 ### The business object
 
 ```ruby
-require 'google_following_count_matcher'
-require 'google_follower_count_matcher'
-require 'google_profile_html_downloader'
+require 'gplus_stats/matchers/follower_count'
+require 'gplus_stats/matchers/following_count'
+require 'gplus_stats/get_profile_html'
 
-module GoogleStatsRetriever
+module GplusStats
   extend self
 
-  def retrieve(uid)
+  def call(uid)
     google_url = url(uid)
     {
       follower_count:  follower_count(google_url),
       following_count: following_count(google_url),
     }
   end
-  alias_method :call, :retrieve
 
 private
 
   def follower_count(url)
-    html = GoogleProfileHtmlDownloader.(url)
-    GoogleFollowerCountMatcher.(html)
+    GplusStats::Matchers::FollowerCount.(profile_html(url))
   end
 
   def following_count(url)
-    html = GoogleProfileHtmlDownloader.(url)
-    GoogleFollowingCountMatcher.(html)
+    GplusStats::Matchers::FollowingCount.(profile_html(url))
+  end
+
+  def profile_html(url)
+    GplusStats::GetProfileHtml.(url)
   end
 
   def url(uid)
@@ -119,15 +119,12 @@ end
 ### A downloader delegate object
 
 ```ruby
-require 'typhoeus'
-
-module GoogleProfileHtmlDownloader
+module GplusStats::GetProfileHtml
   extend self
 
-  def download(url)
+  def call(url)
     scrape(url)
   end
-  alias_method :call, :download
 
 private
 
@@ -166,11 +163,11 @@ end
 
 ```ruby
 require 'nokogiri'
-require 'google_matchers'
+require 'gplus_stats/matchers/match'
 
-module GoogleFollowerCountMatcher
+module GplusStats::Matchers::FollowerCount
   extend self
-  extend GoogleMatchers
+  extend GplusStats::Matchers::Match
 
 private
 
@@ -188,17 +185,18 @@ end
 
 ```ruby
 require 'nokogiri'
-require 'google_matchers'
+require 'gplus_stats/matchers/match'
 
-module GoogleFollowingCountMatcher
+module GplusStats::Matchers::FollowerCount
   extend self
-  extend GoogleMatchers
+  extend GplusStats::Matchers::Match
 
 private
 
-  def match_followings(html)
+  def match_followers(html)
     doc = Nokogiri::HTML(html)
-    doc.css('.bkb').children.first.children.first.text.gsub(/\D/,'').to_i
+    doc.css(".vkb").children.first.text.gsub(/\D/,'').to_i
+  rescue NoMethodError
   end
 
 end
@@ -207,12 +205,11 @@ end
 ### A 'base' matcher object to share functionality
 
 ```ruby
-module GoogleMatchers
+module GplusStats::Matchers::Match
 
-  def match(html)
+  def call(html)
     matches(html) || 0
   end
-  alias_method :call, :match
 
 protected
 
