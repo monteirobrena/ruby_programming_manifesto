@@ -289,28 +289,19 @@ You can go foward in time with Bob, or back in time with Bob. From that you coul
 
 ## Acknowledgments and Thanks
 
-I would like to say thank you to all the people I have sucked off of like a vampiric zombie since 2007. Some of these were from videos of talks, some were pairing sessions, some were just friends on irc who liked to bang Ruby. This list is alphabetical and in reverse because I don't want anyone in the last positions for any reason except arbitrary sorting... :)
+I would like to say thank you to all the people I have learned from. In particular the people on the folowing list changed my life. Some of these were from videos of talks, some were pairing sessions, some were just friends on irc who liked to bang Ruby. This list is alphabetical and in reverse because I don't want anyone in the last positions for any reason except arbitrary sorting... :)
 
 * Zed Shaw
-* Uncle Bob
-* Steve Klabnik
 * Sandi Metz
-* Ryan Bates
+* Robert Martin
+* Rich Hickey
 * Phil Cohen
-* Obie Fernandez
 * Kent Beck
-* Josh Susser
-* Jose Valim
 * Jim Weirich
 * Jessica Kerr
-* James Edward Gray II
-* Gregg Pollack
-* Geoffrey Grosenbach
-* Fabio Akita
-* Daniel Fischer
+* Gary Bernhardt
+* David Chelimsky
 * Corey Haines
 * Brian Guthrie
 * Ben Orenstien
-* Ben Curtis
 * Avdi Grimm
-* Aaron Patterson
